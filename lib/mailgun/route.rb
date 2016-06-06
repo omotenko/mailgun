@@ -13,7 +13,8 @@ module Mailgun
     end
 
     def create(description, priority, filter, actions)
-      data = ::Multimap.new
+      data = {}
+      data.compare_by_identity
 
       data['priority']    = priority
       data['description'] = description
@@ -22,7 +23,7 @@ module Mailgun
       actions = build_actions(actions)
 
       actions.each do |action|
-        data['action'] = action
+        data['action'.dup] = action
       end
 
       data = data.to_hash
@@ -32,9 +33,10 @@ module Mailgun
     end
 
     def update(route_id, params)
-      data = ::Multimap.new
+      data = {}
+      data.compare_by_identity
 
-      params = Hash[params.map{ |k, v| [k.to_s, v] }]
+      params.stringify_keys!
 
       ['priority', 'description'].each do |key|
         data[key] = params[key] if params.has_key?(key)
@@ -46,7 +48,7 @@ module Mailgun
         actions = build_actions(params['actions'])
 
         actions.each do |action|
-          data['action'] = action
+          data['action'.dup] = action
         end
       end
 
