@@ -14,19 +14,10 @@ module Mailgun
 
     def create(description, priority, filter, actions)
       data = {}
-      data.compare_by_identity
-
       data['priority']    = priority
       data['description'] = description
       data['expression']  = build_filter(filter)
-
-      actions = build_actions(actions)
-
-      actions.each do |action|
-        data['action'.dup] = action
-      end
-
-      data = data.to_hash
+      data['action'] = build_actions(actions)
 
       # TODO: Raise an error or return false if unable to create route
       Mailgun.submit(:post, route_url, data)["route"]["id"]
