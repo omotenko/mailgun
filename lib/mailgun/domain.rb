@@ -35,6 +35,12 @@ module Mailgun
       Mailgun.submit :put, "#{domain_url(domain)}/verify"
     end
 
+    # Enable trackig for domein
+    def tracking(domain, type, active=true)
+      opts = {active: active}
+      Mailgun.submit :put, "#{domain_url(domain)}/tracking/#{type}", opts
+    end
+
     private
 
     # Helper method to generate the proper url for Mailgun domain API calls
