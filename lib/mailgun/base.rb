@@ -105,7 +105,7 @@ module Mailgun
       if error.handle.kind_of? Mailgun::ErrorBase
         raise error.handle
       else
-        raise error
+        return error.handle
       end
     end
   end

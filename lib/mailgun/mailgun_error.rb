@@ -23,7 +23,7 @@ module Mailgun
     end
 
     def handle
-      return error.handle
+      error.handle
     end
   end
 
@@ -33,13 +33,13 @@ module Mailgun
     #
     # @return [type] [description]
     def handle
-      return self
+      self
     end
   end
 
   class NotFound < ErrorBase
     def handle
-      return nil
+      nil
     end
   end
 
